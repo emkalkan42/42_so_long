@@ -6,7 +6,7 @@
 #    By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 15:34:18 by emkalkan          #+#    #+#              #
-#    Updated: 2024/02/06 22:25:53 by emkalkan         ###   ########.fr        #
+#    Updated: 2024/02/15 20:11:06 by emkalkan         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ MLXFLAGS=	-L ./libs/libx -lmlx -lXext -lX11
 
 LIBS	=	 ./libs/libft/libft.a
 
-SRCS	=	 src/typecheck.c src/so_long.c src/wallcheck.c
+SRCS	=	 src/typecheck.c src/so_long.c src/wallcheck.c src/floodfill.c src/floodfill2.c src/helpers.c src/draw.c src/error.c src/init.c
 
 OBJS	=	$(SRCS:.c=.o)
 

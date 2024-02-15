@@ -1,49 +1,98 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   floodfill.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/07 19:58:01 by emkalkan          #+#    #+#             */
+/*   Updated: 2024/02/16 00:11:06 by emkalkan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../so_long.h"
 
-void copymap(t_game *game)
+void	intialise_tmp_map(t_game *game)
 {
-	ft_strdup(game->map) opy;
+	int	x;
+	int	y;
+
+	y = 0;
+	game->map_tmp = (char **)malloc(game->bgy * sizeof(char *));
+	while (y < game->bgy)
+	{
+		game->map_tmp[y] = (char *)malloc((game->bgx + 1) * sizeof(char));
+		x = 0;
+		while (x < game->bgx)
+		{
+			game->map_tmp[y][x] = game->map[y][x];
+			if (game->map_tmp[y][x] == 'P')
+			{
+				game->ppostionx = y;
+				game->ppostiony = x;
+			}
+			x++;
+		}
+		game->map_tmp[y][x] = '\0';
+		y++;
+	}
 }
 
-void move(t_game *game, int x, int y, int coins, int exit)
+/* void	printcurrentmap(t_game *game)
 {
-	int coinscollected;
-	int exitcollected;
+	int	x;
+	int	y;
 
-	exitcollected = 0;
-	coinscollected = 0;
-
-	while (coins < coinscollected && exit < exitcollected)
+	y = 0;
+	while (y < game->bgy)
 	{
-		if (game->map[x + 1] != 1 || game->map[x + 1]  != '@')
+		x = 0;
+		while (x < game->bgx)
 		{
 			x++;
-			x = '@';
 		}
-		if (game->map[y + 1] != 1 || game->map[y + 1]  != '@')
-		{
-			y++;
-			y = '@';
-		}
-		if (game->map[x - 1] != 1 || game->map[x - 1]  != '@')
-		{
-			x--;
-			x = '@';
-		}
-		if (game->map[y - 1] != 1 || game->map[y - 1]  != '@')
-		{
-			y--;
-			y = '@';
-		}
+		ft_printf("| %s |\n",game->map_tmp[y]);
+		y++;
 	}
+	usleep(250000);
+} */
+int	possible_or_not_exit(t_game *game, int x, int y)
+{
+	if (game->map_tmp[x][y] != '1' && game->map_tmp[x][y] != 'C'
+		&& game->map_tmp[x][y] != 'F')
+	{
+		return (1);
+	}
+	return (0);
 }
 
-int floodfill(t_game *game)
+int	check_for_path(t_game *game, int x, int y)
 {
-
-	if (move(game, game->positions_P[0].x, game->positions_P[0].y, game->ballcount, 1))
+	intialise_tmp_map(game);
+	find_all_collectibles(game, y, x);
+	find_exit(game, y, x);
+	ft_printf("exit count: %d\n", game->tmp_exit_count);
+	if (game->tmp_collectible_count == 0)
 	{
-
+		if (game->tmp_exit_count > 0)
+		{
+			ft_printf("Map passed all checks. Game is launching... \n");
+			free_map(game, game->map_tmp);
+			return (1);
+		}
+		else
+		{
+			ft_printf("ERROR PATH EXIT\n");
+			free_map(game, game->map_tmp);
+			mlx_destroy_window(game->mlx_ptr, game->win);
+			return (0);
+		}
 	}
-
+	else
+	{
+		ft_printf("ERROR PATH COLLECTIBLES\n");
+		free_map(game, game->map_tmp);
+		mlx_destroy_window(game->mlx_ptr, game->win);
+		return (0);
+	}
 }
