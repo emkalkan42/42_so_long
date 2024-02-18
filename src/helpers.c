@@ -1,16 +1,14 @@
 #include "../so_long.h"
 
-void	free_map(t_game *game, char **map_version)
+void	free_map(char **map_version)
 {
-	int	i;
-
-	i = 0;
-	while (i < game->bgy)
-	{
-		free(map_version[i]);
-		i++;
-	}
-	free(map_version);
+    int i = 0;
+    while (map_version[i])
+    {
+        free(map_version[i]);
+        i++;
+    }
+    free(map_version);
 }
 
 void	loadimg(t_game *game)
@@ -59,7 +57,7 @@ void	free_game(t_game *game)
 	mlx_destroy_image(game->mlx_ptr, game->img_playerl);
 	mlx_destroy_image(game->mlx_ptr, game->img_playerf);
 	mlx_destroy_image(game->mlx_ptr, game->img_playerb);
-	free_map(game, game->map);
+	free_map(game->map);
 	mlx_destroy_window(game->mlx_ptr, game->win);
 	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
@@ -68,7 +66,7 @@ void	free_game(t_game *game)
 
 void	free_gamechars(t_game *game)
 {
-	free_map(game, game->map);
+	free_map(game->map);
 	mlx_destroy_window(game->mlx_ptr, game->win);
 	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);

@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:10:52 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/18 17:57:20 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:09:32 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
 	// 5.3 no player DONE
 	// 5.4 no collectible DONE
 	// 5.5 no wall DONE FLOOTFILL
-	// 5.6 no map
-	// 5.7 no file
-	// 5.8 not rectangular
-	// 5.9 no valid map
-	// 5.10 unknown character
-	// 5.11 multiple players
-	// 5.12 multiple exits
-// 6. norminette
+	// 5.6 no map DONE
+	// 5.7 no file DONE 
+	// 5.8 not rectangular DONE
+	// 5.9 no valid map DONE
+	// 5.10 unknown character FREED BUT STARTETS
+	// 5.11 multiple players "
+	// 5.12 multiple exits "
+	// 6. norminette
 void	movehelp(t_game *game)
 {
 	mlx_put_image_to_window(game->mlx_ptr, game->win, game->img_bgd, game->x,
@@ -159,13 +159,15 @@ int main(int argc, char *argv[])
     if (!game)
     {
         ft_printf("Memory allocation failed.\n");
+		free(game);
         return EXIT_FAILURE;
     }
 
     if (typecheck(filename, game) != 0)
     {
         ft_printf("Error in typecheck function\n");
-        free(game);
+		free(game->map);
+		free(game);
         return EXIT_FAILURE;
     }
 

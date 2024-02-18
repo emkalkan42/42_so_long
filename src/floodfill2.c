@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:36:53 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/16 19:31:30 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:57:42 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	check_exit_coordinate(t_game *game, int x, int y)
 
 int	find_exit(t_game *game, int x, int y)
 {
+	printcurrentmap(game);
 	if (game->map_tmp[x][y] != '1' && game->map_tmp[x][y] != 'C')
 		game->map_tmp[x][y] = 'C';
 	if (possible_or_not_exit(game, x + 1, y) == 1)
@@ -60,6 +61,7 @@ void	check_collectible_coordinate(t_game *game, int x, int y)
 
 int	find_all_collectibles(t_game *game, int x, int y)
 {
+	printcurrentmap(game);
 	if (possible_or_not(game, x, y) == 1 && game->map_tmp[x][y] != 'E')
 		game->map_tmp[x][y] = 'X';
 	if (possible_or_not(game, x + 1, y) == 1)

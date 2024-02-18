@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:11:01 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/16 00:33:28 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/18 18:47:09 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,8 @@ int	typecheck(const char *file_path, t_game *game)
 	if (!game->map)
 	{
 		ft_printf("Error allocating memory for map\n");
-		return (1);
+		free(game);
+		return (EXIT_FAILURE);
 	}
 	width = 0;
 	height = 0;
@@ -111,6 +112,11 @@ int	typecheck(const char *file_path, t_game *game)
 		tmp = get_next_line(map_fd);
 	}
 	free(tmp);
+	if (height == 0)
+    {
+        close(map_fd);
+        return (EXIT_FAILURE);
+    }
 	game->map[height] = NULL;
 	while (game->num_positions_1 < MAX_ELEMENTS)
 	{

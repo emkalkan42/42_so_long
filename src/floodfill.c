@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 19:58:01 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/18 17:54:30 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/18 22:04:39 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	intialise_tmp_map(t_game *game)
 	}
 }
 
-/* void	printcurrentmap(t_game *game)
+void	printcurrentmap(t_game *game)
 {
 	int	x;
 	int	y;
@@ -54,8 +54,8 @@ void	intialise_tmp_map(t_game *game)
 		ft_printf("| %s |\n",game->map_tmp[y]);
 		y++;
 	}
-	usleep(250000);
-} */
+	usleep(25000);
+}
 int	possible_or_not_exit(t_game *game, int x, int y)
 {
 	if (game->map_tmp[x][y] != '1' && game->map_tmp[x][y] != 'C'
@@ -72,18 +72,18 @@ int	check_for_path(t_game *game, int x, int y)
 	intialise_tmp_map(game);
 	find_all_collectibles(game, y, x);
 	find_exit(game, y, x);
-	if (game->tmp_collectible_count > 0)
+	if (game->tmp_collectible_count == 0)
 	{
 		if (game->tmp_exit_count > 0)
 		{
 			ft_printf("Map passed all checks. Game is launching... \n");
-			free_map(game, game->map_tmp);
+			free_map(game->map_tmp);
 			return (1);
 		}
 		else
 		{
 			ft_printf("ERROR PATH EXIT\n");
-			free_map(game, game->map_tmp);
+			free_map(game->map_tmp);
 			mlx_destroy_window(game->mlx_ptr, game->win);
 			return (0);
 		}
@@ -91,9 +91,7 @@ int	check_for_path(t_game *game, int x, int y)
 	else
 	{
 		ft_printf("ERROR PATH COLLECTIBLES\n");
-		free_map(game, game->map_tmp);
-		free_gamechars(game);
+		free(game);
 		exit(EXIT_FAILURE);
-
 	}
 }
