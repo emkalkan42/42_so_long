@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:10:57 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/16 00:13:02 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:57:44 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,20 +67,17 @@ typedef struct s_game
 	t_position	positions_1[MAX_ELEMENTS];
 	int			num_positions_1;
 
-	t_position	positions_C[MAX_ELEMENTS];
-	int			num_positions_C;
+	t_position	positions_c[MAX_ELEMENTS];
+	int			num_positions_c;
 
-	t_position	positions_F[MAX_ELEMENTS];
-	int			num_positions_F;
+	t_position	positions_x[MAX_ELEMENTS];
+	int			num_positions_x;
 
-	t_position	positions_X[MAX_ELEMENTS];
-	int			num_positions_X;
+	t_position	positions_e[1];
+	int			num_positions_e;
 
-	t_position	positions_E[1];
-	int			num_positions_E;
-
-	t_position	positions_P[1];
-	int			num_positions_P;
+	t_position	positions_p[1];
+	int			num_positions_p;
 }				t_game;
 
 int				movement(int keycode, t_game *game);
@@ -103,16 +100,20 @@ void			intialise_tmp_map(t_game *game);
 int				possible_or_not(t_game *game, int x, int y);
 void			check_exit_coordinate(t_game *game, int x, int y);
 void			check_collectible_coordinate(t_game *game, int x, int y);
-// void printcurrentmap(t_game *game);
 int				possible_or_not_exit(t_game *game, int x, int y);
 void			loadimg(t_game *game);
 void			error1(t_game *game);
 void			error2(t_game *game);
+void			error3(t_game *game);
 void			init_pointers(t_game *game);
 void			init_integers(t_game *game);
 void			init_arrays(t_game *game);
 void			init_counters(t_game *game);
 void			init_game(t_game *game);
 void			free_game(t_game *game);
+void			free_gametest(t_game *game);
+int				check_file_format(const char *file_name);
+void			free_gamechars(t_game *game);
+
 
 #endif

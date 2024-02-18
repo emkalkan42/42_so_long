@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:11:01 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/16 00:10:50 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/16 00:33:28 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,22 @@ void	set_positions(t_game *game, char buffer, int current_width, int height)
 	}
 	else if (buffer == 'E')
 	{
-		game->positions_E[game->num_positions_E].x = current_width;
-		game->positions_E[game->num_positions_E].y = height;
-		game->num_positions_E++;
+		game->positions_e[game->num_positions_e].x = current_width;
+		game->positions_e[game->num_positions_e].y = height;
+		game->num_positions_e++;
 	}
 	else if (buffer == 'P')
 	{
-		game->positions_P[game->num_positions_P].x = current_width;
-		game->positions_P[game->num_positions_P].y = height;
-		game->num_positions_P++;
+		game->positions_p[game->num_positions_p].x = current_width;
+		game->positions_p[game->num_positions_p].y = height;
+		game->num_positions_p++;
 	}
 	else if (buffer == 'C')
 	{
-		game->positions_C[game->num_positions_C].x = current_width;
-		game->positions_C[game->num_positions_C].y = height;
-		game->num_positions_C++;
+		game->positions_c[game->num_positions_c].x = current_width;
+		game->positions_c[game->num_positions_c].y = height;
+		game->num_positions_c++;
 		game->ballcount++;
-	}
-	else if (buffer == 'F')
-	{
-		game->positions_F[game->num_positions_F].x = current_width;
-		game->positions_F[game->num_positions_F].y = height;
-		game->num_positions_F++;
 	}
 }
 
@@ -130,11 +124,11 @@ int	typecheck(const char *file_path, t_game *game)
 		game->positions_0[game->num_positions_0].y = -1;
 		game->num_positions_0++;
 	}
-	while (game->num_positions_C < MAX_ELEMENTS)
+	while (game->num_positions_c < MAX_ELEMENTS)
 	{
-		game->positions_C[game->num_positions_C].x = -1;
-		game->positions_C[game->num_positions_C].y = -1;
-		game->num_positions_C++;
+		game->positions_c[game->num_positions_c].x = -1;
+		game->positions_c[game->num_positions_c].y = -1;
+		game->num_positions_c++;
 	}
 	close(map_fd);
 	game->bgx = width;

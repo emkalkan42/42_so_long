@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 19:58:01 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/16 00:11:06 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:54:30 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ int	possible_or_not_exit(t_game *game, int x, int y)
 	return (0);
 }
 
+
 int	check_for_path(t_game *game, int x, int y)
 {
 	intialise_tmp_map(game);
 	find_all_collectibles(game, y, x);
 	find_exit(game, y, x);
-	ft_printf("exit count: %d\n", game->tmp_exit_count);
-	if (game->tmp_collectible_count == 0)
+	if (game->tmp_collectible_count > 0)
 	{
 		if (game->tmp_exit_count > 0)
 		{
@@ -92,7 +92,8 @@ int	check_for_path(t_game *game, int x, int y)
 	{
 		ft_printf("ERROR PATH COLLECTIBLES\n");
 		free_map(game, game->map_tmp);
-		mlx_destroy_window(game->mlx_ptr, game->win);
-		return (0);
+		free_gamechars(game);
+		exit(EXIT_FAILURE);
+
 	}
 }

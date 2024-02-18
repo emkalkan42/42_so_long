@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 20:09:27 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/16 00:10:23 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/16 00:33:13 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ void	init_arrays(t_game *game)
 	memset(game->collected_flags, 0, sizeof(game->collected_flags));
 	memset(game->positions_0, 0, sizeof(game->positions_0));
 	memset(game->positions_1, 0, sizeof(game->positions_1));
-	memset(game->positions_C, 0, sizeof(game->positions_C));
-	memset(game->positions_X, 0, sizeof(game->positions_X));
-	memset(game->positions_E, 0, sizeof(game->positions_E));
-	memset(game->positions_P, 0, sizeof(game->positions_P));
+	memset(game->positions_c, 0, sizeof(game->positions_c));
+	memset(game->positions_x, 0, sizeof(game->positions_x));
+	memset(game->positions_e, 0, sizeof(game->positions_e));
+	memset(game->positions_p, 0, sizeof(game->positions_p));
 }
 
 void	init_counters(t_game *game)
@@ -61,9 +61,8 @@ void	init_counters(t_game *game)
 	// Initialize the number of positions to 0
 	game->num_positions_0 = 0;
 	game->num_positions_1 = 0;
-	game->num_positions_C = 0;
-	game->num_positions_F = 0;
-	game->num_positions_X = 0;
-	game->num_positions_E = 0;
-	game->num_positions_P = 0;
+	game->num_positions_c = 0;
+	game->num_positions_x = 0;
+	game->num_positions_e = 0;
+	game->num_positions_p = 0;
 }

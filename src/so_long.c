@@ -6,17 +6,25 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:10:52 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/16 00:10:40 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/18 17:57:20 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-// 1. check if the map is surounded by 1XXXXXX
-// 2. check if the map is possible
-// 3. destroy all images for still reacheable fail
-// 4. exit image if on player is gone
 // 5. edge cases file names and all
+	// 5.1 .ber DONE
+	// 5.2 no exit DONE
+	// 5.3 no player DONE
+	// 5.4 no collectible DONE
+	// 5.5 no wall DONE FLOOTFILL
+	// 5.6 no map
+	// 5.7 no file
+	// 5.8 not rectangular
+	// 5.9 no valid map
+	// 5.10 unknown character
+	// 5.11 multiple players
+	// 5.12 multiple exits
 // 6. norminette
 void	movehelp(t_game *game)
 {
@@ -79,8 +87,8 @@ int	movement(int keycode, t_game *game) // MOVEMENT //23 lines
 		exit(EXIT_SUCCESS);
 	}
 
-	if (game->x == game->positions_E[0].x * game->charsize
-		&& game->y == game->positions_E[0].y * game->charsize
+	if (game->x == game->positions_e[0].x * game->charsize
+		&& game->y == game->positions_e[0].y * game->charsize
 		&& game->collectedcount > game->ballcount)
 	{
 		ft_printf("You Won\n");
@@ -89,13 +97,13 @@ int	movement(int keycode, t_game *game) // MOVEMENT //23 lines
 	}
 	else
 		mlx_put_image_to_window(game->mlx_ptr, game->win, game->img_exit,
-			game->positions_E[0].x * game->charsize, game->positions_E[0].y
+			game->positions_e[0].x * game->charsize, game->positions_e[0].y
 			* game->charsize);
 	int ib = 0;
-	while (ib < game->num_positions_C)
+	while (ib < game->num_positions_c)
 	{
-		if (!game->collected_flags[ib] && game->x == game->positions_C[ib].x
-			* game->charsize && game->y == game->positions_C[ib].y
+		if (!game->collected_flags[ib] && game->x == game->positions_c[ib].x
+			* game->charsize && game->y == game->positions_c[ib].y
 			* game->charsize)
 		{
 			ft_printf("Collected\n");
@@ -120,41 +128,55 @@ void	draw_all(t_game *game)
 void	init_and_loop(t_game *game)
 {
 	game->mlx_ptr = mlx_init();
+	game->charsize = 51;
+	game->collectedcount = 1;
+	game->tmp_collectible_count = game->ballcount;
 	game->win = mlx_new_window(game->mlx_ptr, game->bgx * game->charsize,
-			game->bgy * game->charsize, "Dragon Ball Z");
+			game->bgy * game->charsize, "Dragon Ball");
+	error3(game);
 	error1(game);
 	error2(game);
 	draw_all(game);
-	game->x = game->positions_P[0].x * game->charsize;
-	game->y = game->positions_P[0].y * game->charsize;
+	game->x = game->positions_p[0].x * game->charsize;
+	game->y = game->positions_p[0].y * game->charsize;
 	mlx_key_hook(game->win, &movement, game);
 	mlx_loop(game->mlx_ptr);
 }
 
-int	main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
-	t_game		*game;
-	const char	*filename;
+    t_game      *game;
+    const char  *filename;
 
-	game = calloc(1, sizeof(t_game));
-	if (argc != 2)
-	{
-		ft_printf("Usage: %s <filename>\n", argv[0]);
-		// free_game(game);
-		return (EXIT_FAILURE);
-	}
-	filename = argv[1];
-	if (typecheck(filename, game) == 1)
-	{
-		ft_printf("Error in typecheck function\n");
-		// free_game(game);
-		mlx_destroy_window(game->mlx_ptr, game->win);
-		return (EXIT_FAILURE);
-	}
-	game->charsize = 51;
-	game->collectedcount = 1;
-	game->tmp_collectible_count = game->ballcount;
-	init_and_loop(game);
-	// free_game(game);
-	return (EXIT_SUCCESS);
+    if (argc != 2)
+    {
+        ft_printf("Usage: %s <filename>\n", argv[0]);
+        return EXIT_FAILURE;
+    }
+
+    filename = argv[1];
+    game = calloc(1, sizeof(t_game));
+    if (!game)
+    {
+        ft_printf("Memory allocation failed.\n");
+        return EXIT_FAILURE;
+    }
+
+    if (typecheck(filename, game) != 0)
+    {
+        ft_printf("Error in typecheck function\n");
+        free(game);
+        return EXIT_FAILURE;
+    }
+
+    if (check_file_format(filename) != 1)
+    {
+        ft_printf("Error: Incorrect file format\n");
+        free(game);
+        return EXIT_FAILURE;
+    }
+
+    init_and_loop(game);
+    free(game);
+    return EXIT_SUCCESS;
 }

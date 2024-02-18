@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:36:53 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/16 00:11:10 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/16 19:31:30 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 int	possible_or_not(t_game *game, int x, int y)
 {
 	if (game->map_tmp[x][y] != '1' && game->map_tmp[x][y] != 'X')
-	{
 		return (1);
-	}
 	return (0);
 }
 
@@ -30,10 +28,7 @@ void	check_exit_coordinate(t_game *game, int x, int y)
 int	find_exit(t_game *game, int x, int y)
 {
 	if (game->map_tmp[x][y] != '1' && game->map_tmp[x][y] != 'C')
-	{
 		game->map_tmp[x][y] = 'C';
-		// printcurrentmap(game);
-	}
 	if (possible_or_not_exit(game, x + 1, y) == 1)
 	{
 		check_exit_coordinate(game, x + 1, y);
@@ -60,18 +55,13 @@ int	find_exit(t_game *game, int x, int y)
 void	check_collectible_coordinate(t_game *game, int x, int y)
 {
 	if (game->map_tmp[x][y] == 'C')
-	{
 		game->tmp_collectible_count--;
-	}
 }
 
 int	find_all_collectibles(t_game *game, int x, int y)
 {
 	if (possible_or_not(game, x, y) == 1 && game->map_tmp[x][y] != 'E')
-	{
 		game->map_tmp[x][y] = 'X';
-		// printcurrentmap(game);
-	}
 	if (possible_or_not(game, x + 1, y) == 1)
 	{
 		check_collectible_coordinate(game, x + 1, y);
