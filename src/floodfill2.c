@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/11 16:36:53 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/21 14:49:45 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:54:46 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,4 +84,3 @@ int	find_all_collectibles(t_game *game, int x, int y)
 	}
 	return (0);
 }
-

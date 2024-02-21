@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:10:52 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/21 14:46:39 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:05:58 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,32 @@ int	wallcheck(t_game *game, int x, int y)
 	return (0);
 }
 
-
 int	movement(int keycode, t_game *game)
 {
 	int	ib;
 
 	ib = 0;
-
+	if (keycode == 100 && !wallcheck(game, game->x + game->charsize, game->y))
+	{
+		movehelp(game);
+		game->x += game->charsize;
+		mlx_put_image_to_window(game->mlx_ptr, game->win, game->img_playerr,
+			game->x, game->y);
+	}
+	if (keycode == 97 && !wallcheck(game, game->x - game->charsize, game->y))
+	{
+		movehelp(game);
+		game->x -= game->charsize;
+		mlx_put_image_to_window(game->mlx_ptr, game->win, game->img_playerl,
+			game->x, game->y);
+	}
+	if (keycode == 119 && !wallcheck(game, game->x, game->y - game->charsize))
+	{
+		movehelp(game);
+		game->y -= game->charsize;
+		mlx_put_image_to_window(game->mlx_ptr, game->win, game->img_playerb,
+			game->x, game->y);
+	}
 	if (keycode == 115 && !wallcheck(game, game->x, game->y + game->charsize))
 	{
 		movehelp(game);

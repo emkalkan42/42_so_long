@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:11:01 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/21 14:50:31 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/21 15:05:32 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,6 @@ int	number_of_lines(const char *file_path)
 	num_lines = 0;
 	fd = open(file_path, O_RDONLY);
 	line = get_next_line(fd);
-	if (!line)
-	{
-		close(fd);
-		return (0);
-	}
 	while (line)
 	{
 		num_lines++;
@@ -53,28 +48,12 @@ void	set_positions(t_game *game, char buffer, int current_width, int height)
 	}
 	else if (buffer == 'E')
 	{
-		if (game->num_positions_e > 0)
-		{
-			printf("ERROR: MORE THEN 1 EXIT\n");
-			free_map(game->map, height);
-			free(game->mlx_ptr);
-			free(game);
-			exit(EXIT_FAILURE);
-		}
 		game->positions_e[game->num_positions_e].x = current_width;
 		game->positions_e[game->num_positions_e].y = height;
 		game->num_positions_e++;
 	}
 	else if (buffer == 'P')
 	{
-		if (game->num_positions_p > 0)
-		{
-			printf("ERROR: MORE THEN 1 PLAYER\n");
-			free_map(game->map, height);
-			free(game->mlx_ptr);
-			free(game);
-			exit(EXIT_FAILURE);
-		}
 		game->positions_p[game->num_positions_p].x = current_width;
 		game->positions_p[game->num_positions_p].y = height;
 		game->num_positions_p++;
@@ -86,20 +65,13 @@ void	set_positions(t_game *game, char buffer, int current_width, int height)
 		game->num_positions_c++;
 		game->ballcount++;
 	}
-	else
-	{
-		ft_printf("Error: Invalid character '%c' found in the map.\n", buffer);
-		if (game->map != NULL)
-			free_map(game->map, height);
-		free(game->mlx_ptr);
-		free(game);
-		exit(EXIT_FAILURE);
-	}
 }
 
 int	typecheck(const char *file_path, t_game *game)
 {
 	int		map_fd;
+	int		width;
+	int		height;
 	int		current_width;
 	char	*line;
 	char	*tmp;
@@ -116,11 +88,10 @@ int	typecheck(const char *file_path, t_game *game)
 	{
 		ft_printf("Error allocating memory for map\n");
 		free(game);
-		close(map_fd);
 		return (EXIT_FAILURE);
 	}
-	game->bgx = 0;
-	game->bgy = 0;
+	width = 0;
+	height = 0;
 	tmp = get_next_line(map_fd);
 	while (tmp != NULL)
 	{
@@ -131,22 +102,22 @@ int	typecheck(const char *file_path, t_game *game)
 			return (1);
 		}
 		free(tmp);
-		game->map[game->bgy] = line;
+		game->map[height] = line;
 		current_width = 0;
 		while ((buffer = line[current_width]) != '\0')
-			set_positions(game, buffer, current_width++, game->bgy);
-		if (current_width > game->bgx)
-			game->bgx = current_width;
-		game->bgy++;
+			set_positions(game, buffer, current_width++, height);
+		if (current_width > width)
+			width = current_width;
+		height++;
 		tmp = get_next_line(map_fd);
 	}
 	free(tmp);
-	if (game->bgy == 0)
+	if (height == 0)
 	{
 		close(map_fd);
 		return (EXIT_FAILURE);
 	}
-	game->map[game->bgy] = NULL;
+	game->map[height] = NULL;
 	while (game->num_positions_1 < MAX_ELEMENTS)
 	{
 		game->positions_1[game->num_positions_1].x = -1;
@@ -166,15 +137,7 @@ int	typecheck(const char *file_path, t_game *game)
 		game->num_positions_c++;
 	}
 	close(map_fd);
-	if (game->ballcount == 0)
-	{
-		ft_printf("Error: No collectible found in the map.\n");
-		free_map(game->map, game->bgy);
-		free(game->mlx_ptr);
-		free(game);
-		exit (EXIT_FAILURE);
-	}
-	game->bgx = game->bgx;
-	game->bgy = game->bgy;
+	game->bgx = width;
+	game->bgy = height;
 	return (0);
 }
