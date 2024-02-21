@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/07 19:58:01 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/18 22:04:39 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:49:20 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	intialise_tmp_map(t_game *game)
 	int	y;
 
 	y = 0;
-	game->map_tmp = (char **)malloc(game->bgy * sizeof(char *));
+	game->map_tmp = (char **)malloc(sizeof(char *) * (game->bgy + 1));
+	game->map_tmp[game->bgy] = NULL;
 	while (y < game->bgy)
 	{
 		game->map_tmp[y] = (char *)malloc((game->bgx + 1) * sizeof(char));
@@ -38,24 +39,25 @@ void	intialise_tmp_map(t_game *game)
 	}
 }
 
-void	printcurrentmap(t_game *game)
-{
-	int	x;
-	int	y;
+// void	printcurrentmap(t_game *game)
+// {
+// 	int	x;
+// 	int	y;
 
-	y = 0;
-	while (y < game->bgy)
-	{
-		x = 0;
-		while (x < game->bgx)
-		{
-			x++;
-		}
-		ft_printf("| %s |\n",game->map_tmp[y]);
-		y++;
-	}
-	usleep(25000);
-}
+// 	y = 0;
+// 	while (y < game->bgy)
+// 	{
+// 		x = 0;
+// 		while (x < game->bgx)
+// 		{
+// 			x++;
+// 		}
+// 		ft_printf("| %s |\n",game->map_tmp[y]);
+// 		y++;
+// 	}
+// 	usleep(25000);
+// }
+
 int	possible_or_not_exit(t_game *game, int x, int y)
 {
 	if (game->map_tmp[x][y] != '1' && game->map_tmp[x][y] != 'C'
@@ -65,7 +67,6 @@ int	possible_or_not_exit(t_game *game, int x, int y)
 	}
 	return (0);
 }
-
 
 int	check_for_path(t_game *game, int x, int y)
 {
@@ -77,13 +78,13 @@ int	check_for_path(t_game *game, int x, int y)
 		if (game->tmp_exit_count > 0)
 		{
 			ft_printf("Map passed all checks. Game is launching... \n");
-			free_map(game->map_tmp);
+			free_map(game->map_tmp, -1);
 			return (1);
 		}
 		else
 		{
 			ft_printf("ERROR PATH EXIT\n");
-			free_map(game->map_tmp);
+			free_map(game->map_tmp, -1);
 			mlx_destroy_window(game->mlx_ptr, game->win);
 			return (0);
 		}
@@ -91,7 +92,6 @@ int	check_for_path(t_game *game, int x, int y)
 	else
 	{
 		ft_printf("ERROR PATH COLLECTIBLES\n");
-		free(game);
 		exit(EXIT_FAILURE);
 	}
 }

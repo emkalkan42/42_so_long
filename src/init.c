@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 20:09:27 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/16 00:33:13 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:50:17 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	init_pointers(t_game *game)
 {
-	// Initialize pointers to NULL
 	game->mlx_ptr = NULL;
 	game->win = NULL;
 	game->img_playerr = NULL;
@@ -29,7 +28,6 @@ void	init_pointers(t_game *game)
 
 void	init_integers(t_game *game)
 {
-	// Initialize integer variables to 0
 	game->count = 0;
 	game->charsize = 0;
 	game->ppostionx = 0;
@@ -46,7 +44,6 @@ void	init_integers(t_game *game)
 
 void	init_arrays(t_game *game)
 {
-	// Initialize arrays and their corresponding counters to 0
 	memset(game->collected_flags, 0, sizeof(game->collected_flags));
 	memset(game->positions_0, 0, sizeof(game->positions_0));
 	memset(game->positions_1, 0, sizeof(game->positions_1));
@@ -58,7 +55,6 @@ void	init_arrays(t_game *game)
 
 void	init_counters(t_game *game)
 {
-	// Initialize the number of positions to 0
 	game->num_positions_0 = 0;
 	game->num_positions_1 = 0;
 	game->num_positions_c = 0;

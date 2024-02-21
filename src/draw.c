@@ -6,13 +6,13 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/15 15:28:40 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/16 00:41:06 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:48:30 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../so_long.h"
 
-int	draw_backgroundx(t_game *game) // 17 lines
+int	draw_backgroundx(t_game *game)
 {
 	while (game->x < game->charsize * game->bgx && game->y < game->charsize
 		* game->bgy)

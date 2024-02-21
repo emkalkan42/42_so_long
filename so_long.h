@@ -6,7 +6,7 @@
 /*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/27 17:10:57 by emkalkan          #+#    #+#             */
-/*   Updated: 2024/02/18 18:57:53 by emkalkan         ###   ########.fr       */
+/*   Updated: 2024/02/21 14:52:09 by emkalkan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ int				all_ones(char *s, int strlen);
 int				map_check_walls_outside(t_game *game);
 int				find_all_collectibles(t_game *game, int x, int y);
 int				find_exit(t_game *game, int x, int y);
-void			free_map(char **map_version);
+void			free_map(char **map_version, int height);
 int				check_for_path(t_game *game, int x, int y);
 void			intialise_tmp_map(t_game *game);
 int				possible_or_not(t_game *game, int x, int y);
@@ -114,7 +114,23 @@ void			free_game(t_game *game);
 void			free_gametest(t_game *game);
 int				check_file_format(const char *file_name);
 void			free_gamechars(t_game *game);
-void			printcurrentmap(t_game *game);
+void			free_flood(t_game *game);
+void 			buffer0(t_game *game, char buffer, int current_width, int height);
+void 			buffer1(t_game *game, char buffer, int current_width, int height);
+void 			buffere(t_game *game, char buffer, int current_width, int height);
+void 			bufferp(t_game *game, char buffer, int current_width, int height);
+void 			bufferc(t_game *game, char buffer, int current_width, int height);
+void			free_invalidc(t_game *game);
+void			free_postions(t_game *game);
+int				right(int keycode, t_game *game);
+int				left(int keycode, t_game *game);
+int				down(int keycode, t_game *game);
+int				up(int keycode, t_game *game);
+int				exitgame(int keycode, t_game *game);
+int				finishedornot(t_game *game);
+int				collectedfunc(t_game *game);
+int				wallcheck(t_game *game, int x, int y);
+void			movehelp(t_game *game);
 
 
 #endif

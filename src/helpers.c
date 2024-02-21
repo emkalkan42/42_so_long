@@ -1,14 +1,39 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   helpers.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: emkalkan <emkalkan@student.42berlin.de>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/19 23:53:02 by emkalkan          #+#    #+#             */
+/*   Updated: 2024/02/21 14:50:10 by emkalkan         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../so_long.h"
 
-void	free_map(char **map_version)
+void	free_map(char **map_version, int height)
 {
-    int i = 0;
-    while (map_version[i])
-    {
-        free(map_version[i]);
-        i++;
-    }
-    free(map_version);
+	int	i;
+
+	if (height != -1)
+	{
+		while (height >= 0)
+		{
+			free(map_version[height]);
+			height--;
+		}
+	}
+	else
+	{
+		i = 0;
+		while (map_version[i])
+		{
+			free(map_version[i]);
+			i++;
+		}
+	}
+	free(map_version);
 }
 
 void	loadimg(t_game *game)
@@ -40,15 +65,6 @@ void	loadimg(t_game *game)
 
 void	free_game(t_game *game)
 {
-	// free(game->positions_1);
-	// free(game->positions_c);
-	// free(game->positions_e);
-	// free(game->positions_p);
-	// free(game->img_bgd);
-	// free(game->img_wall);
-	// free(game->img_ball);
-	// free(game->img_exit);
-	// free(game->img_playerr);
 	mlx_destroy_image(game->mlx_ptr, game->img_bgd);
 	mlx_destroy_image(game->mlx_ptr, game->img_wall);
 	mlx_destroy_image(game->mlx_ptr, game->img_ball);
@@ -57,7 +73,7 @@ void	free_game(t_game *game)
 	mlx_destroy_image(game->mlx_ptr, game->img_playerl);
 	mlx_destroy_image(game->mlx_ptr, game->img_playerf);
 	mlx_destroy_image(game->mlx_ptr, game->img_playerb);
-	free_map(game->map);
+	free_map(game->map, -1);
 	mlx_destroy_window(game->mlx_ptr, game->win);
 	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
@@ -66,7 +82,7 @@ void	free_game(t_game *game)
 
 void	free_gamechars(t_game *game)
 {
-	free_map(game->map);
+	free_map(game->map, -1);
 	mlx_destroy_window(game->mlx_ptr, game->win);
 	mlx_destroy_display(game->mlx_ptr);
 	free(game->mlx_ptr);
